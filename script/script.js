@@ -1,11 +1,10 @@
 'use strict';
 
 const todoControl = document.querySelector('.todo-control'),
-    headerInput = document.querySelector('.header-input'),//input
-    headerButton = document.querySelector('.header-button'), //кнопка 
-    todoList = document.querySelector('.todo-list'), //ul
-    todoCompleted = document.querySelector('.todo-completed'),
-    todoItem = document.querySelector('.todo-item');
+    headerInput = document.querySelector('.header-input'),
+    todoList = document.querySelector('.todo-list'),
+    todoCompleted = document.querySelector('.todo-completed');
+
 
 const todoData = [{
         value: 'Сварить кофе',
@@ -17,27 +16,13 @@ const todoData = [{
     }
 ];
 
-const showText = function(){
-    todoItem.textContent = localStorage.getItem('memory');
-}
-headerInput.addEventListener('click', function(){
-    
-    localStorage.setItem('memory', headerInput.value);
-    
-    showText();
-});
-
 const render = function() {
-    
+
     todoList.textContent = '';
     todoCompleted.textContent = '';
-
     todoData.forEach(function(item) {
-        
         const li = document.createElement('li');
         li.classList.add('todo-item');
-        // item.value = '';
-        
         li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
             '<div class="todo-buttons">' +
             '<button class="todo-remove"></button>' +
@@ -51,6 +36,7 @@ const render = function() {
         } else {
             todoList.append(li);
         }
+
         const todoCompletedBtn = li.querySelector('.todo-complete');
 
         todoCompletedBtn.addEventListener('click', function() {
@@ -58,15 +44,16 @@ const render = function() {
             render();
         });
 
-        const todoRemoveBtn = document.querySelector('.todo-remove');
-        todoRemoveBtn.addEventListener('click', function(e) {
-            e.todoRemoveBtn.remove(target);
+
+        const todoDeleteBtn = document.querySelector('.todo-remove');
+        todoDeleteBtn.addEventListener('click', function() {
+            // todoDeleteBtn.remove(li);
+            item.style.display = 'none';
+            console.log(li);
             render();
         });
     });
-    
 };
-
 
 todoControl.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -76,8 +63,10 @@ todoControl.addEventListener('submit', function(event) {
         completed: false
     };
     todoData.push(newTodo);
+    localStorage.setItem('message', JSON.stringify(newTodo));
     render();
+
+
 });
 
 render();
-
