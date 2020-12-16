@@ -49,7 +49,7 @@ const render = function() {
         todoDeleteBtn.addEventListener('click', function() {
             // todoDeleteBtn.remove(li);
             item.style.display = 'none';
-            console.log(li);
+            todoDeleteBtn.remove(li);
             render();
         });
     });
