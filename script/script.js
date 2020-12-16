@@ -6,21 +6,15 @@ const todoControl = document.querySelector('.todo-control'),
     todoCompleted = document.querySelector('.todo-completed');
 
 
-const todoData = [{
-        value: 'Сварить кофе',
-        completed: false
-    },
-    {
-        value: 'Помыть посуду',
-        completed: true
-    }
-];
-
+const todoData = JSON.parse(localStorage.getItem('message')) || [];
+const saveToLocalStorage = function () {
+    localStorage.setItem('message', JSON.stringify(todoData));
+};
 const render = function() {
 
     todoList.textContent = '';
     todoCompleted.textContent = '';
-    todoData.forEach(function(item) {
+    todoData.forEach(function(item, index) {
         const li = document.createElement('li');
         li.classList.add('todo-item');
         li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
@@ -31,6 +25,7 @@ const render = function() {
         if (item.value === '') {
             return;
         }
+        
         if (item.completed) {
             todoCompleted.append(li);
         } else {
@@ -41,16 +36,16 @@ const render = function() {
 
         todoCompletedBtn.addEventListener('click', function() {
             item.completed = !item.completed;
+            saveToLocalStorage();
             render();
         });
 
 
-        const todoDeleteBtn = document.querySelector('.todo-remove');
+        const todoDeleteBtn = li.querySelector('.todo-remove');
         todoDeleteBtn.addEventListener('click', function() {
-            // todoDeleteBtn.remove(li);
-            // todoData.style.display = 'none';
-            li.remove(todoData[item, [0]]);
-            console.log(li);
+            todoData.splice(index, 1);
+            saveToLocalStorage();
+            render();
         });
     });
 };
@@ -63,7 +58,7 @@ todoControl.addEventListener('submit', function(event) {
         completed: false
     };
     todoData.push(newTodo);
-    localStorage.setItem('message', JSON.stringify(newTodo));
+    saveToLocalStorage();
     render();
 });
 
