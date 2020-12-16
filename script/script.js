@@ -48,9 +48,9 @@ const render = function() {
         const todoDeleteBtn = document.querySelector('.todo-remove');
         todoDeleteBtn.addEventListener('click', function() {
             // todoDeleteBtn.remove(li);
-            item.style.display = 'none';
-            todoDeleteBtn.remove(li);
-            render();
+            // todoData.style.display = 'none';
+            li.remove(todoData[item, [0]]);
+            console.log(li);
         });
     });
 };
@@ -65,8 +65,6 @@ todoControl.addEventListener('submit', function(event) {
     todoData.push(newTodo);
     localStorage.setItem('message', JSON.stringify(newTodo));
     render();
-
-
 });
 
 render();
